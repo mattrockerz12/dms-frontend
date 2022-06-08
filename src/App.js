@@ -1,8 +1,10 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import DocumentList from "./components/DocumentList";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Nav from "./components/Nav";
+import ProjectList from "./components/ProjectList";
 import Register from "./components/Register";
 
 const App = () => {
@@ -56,16 +58,16 @@ const App = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="table.html">
+              <Link className="nav-link" to="/projects">
                 <i className="fa-solid fa-file"></i>
                 <span>Projects</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="table.html">
+              <Link className="nav-link" to="/documents">
                 <i className="fa-solid fa-folder-plus"></i>
                 <span>Documents</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="table.html">
@@ -94,6 +96,8 @@ const App = () => {
           <div className="container-fluid">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/documents" element={<DocumentList />} />
+              <Route path="/projects" element={<ProjectList />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Routes>
