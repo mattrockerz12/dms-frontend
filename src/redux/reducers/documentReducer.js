@@ -14,6 +14,20 @@ const documentReducer = (state = initialState, action) => {
         documents: action.payload,
         meta: action.meta,
       };
+    case types.CREATE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        documents: [...state.documents, { ...action.payload }],
+      };
+    case types.DELETE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        documents: [
+          ...state.documents.filter(
+            (document) => document.id !== action.payload.id
+          ),
+        ],
+      };
     default:
       return state;
   }

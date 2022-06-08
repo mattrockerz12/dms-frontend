@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Nav from "./components/Nav";
 import ProjectList from "./components/ProjectList";
 import Register from "./components/Register";
+import DocumentCreateForm from "./components/DocumentCreateForm";
 
 const App = () => {
   const handleToggle = () => {
@@ -32,9 +33,9 @@ const App = () => {
     <div id="wrapper">
       <nav className="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
         <div className="container-fluid d-flex flex-column p-0">
-          <a
+          <Link
             className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-            href="#"
+            to="/"
           >
             <div className="sidebar-brand-icon rotate-n-15">
               <i className="fa-solid fa-book"></i>
@@ -42,14 +43,14 @@ const App = () => {
             <div className="sidebar-brand-text mx-3">
               <span>DMS</span>
             </div>
-          </a>
+          </Link>
           <hr className="sidebar-divider my-0" />
           <ul className="navbar-nav text-light" id="accordionSidebar">
             <li className="nav-item">
-              <a className="nav-link active" href="index.html">
+              <Link className="nav-link active" to="/">
                 <i className="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="profile.html">
@@ -96,6 +97,7 @@ const App = () => {
           <div className="container-fluid">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/documentform" element={<DocumentCreateForm />} />
               <Route path="/documents" element={<DocumentList />} />
               <Route path="/projects" element={<ProjectList />} />
               <Route path="/login" element={<Login />} />

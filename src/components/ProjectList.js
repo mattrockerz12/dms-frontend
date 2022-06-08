@@ -95,7 +95,11 @@ const ProjectList = () => {
                 {projects.map((project, index) => (
                   <tr key={index}>
                     <td>{project.name}</td>
-                    <td>{moment(project.created_at).format("MMM Do YY")}</td>
+                    <td>
+                      {moment(project.created_at).format(
+                        "MMMM Do YYYY, h:mm:ss a"
+                      )}
+                    </td>
                     <td>
                       <span className="badge bg-success">
                         {project.document_count}

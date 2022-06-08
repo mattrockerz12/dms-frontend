@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadDocuments } from "../redux/actions/documentActions";
+import {
+  loadDocuments,
+  removeDocument,
+} from "../redux/actions/documentActions";
 import Pagination from "react-js-pagination";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const DocumentList = () => {
   const dispatch = useDispatch();
@@ -14,7 +18,7 @@ const DocumentList = () => {
 
   useEffect(() => {
     dispatch(loadDocuments(filters));
-  }, [filters]);
+  }, [filters, filters.page, dispatch]);
 
   const handlePageChange = (pageNumber) => {
     setFilters({
@@ -23,17 +27,21 @@ const DocumentList = () => {
     });
   };
 
+  const handleDelete = (document) => {
+    dispatch(removeDocument(document));
+  };
+
   return (
     <>
       <div className="d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className="text-dark mb-0">Documents</h3>
-        <a
+        <Link
           className="btn btn-primary btn-sm d-none d-sm-inline-block"
           role="button"
-          href="#"
+          to="/documentform"
         >
           <i className="fa-solid fa-plus"></i>&nbsp;Add Document
-        </a>
+        </Link>
       </div>
       <div className="card shadow">
         <div className="card-header py-3">
@@ -91,10 +99,14 @@ const DocumentList = () => {
                 </tr>
               </thead>
               <tbody>
-                {documents.map((document, index) => (
-                  <tr key={index}>
+                {documents.map((document) => (
+                  <tr key={document.id}>
                     <td>{document.name}</td>
-                    <td>{moment(document.created_at).format("MMM Do YY")}</td>
+                    <td>
+                      {moment(document.created_at).format(
+                        "MMMM Do YYYY, h:mm:ss a"
+                      )}
+                    </td>
                     <td>
                       <span className="badge bg-success">
                         {document.document_count}
@@ -102,7 +114,12 @@ const DocumentList = () => {
                     </td>
                     <td>
                       <div className="btn-group">
-                        <button className="btn btn-danger">Delete</button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(document)}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>
