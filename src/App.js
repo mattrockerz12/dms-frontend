@@ -7,6 +7,12 @@ import Nav from "./components/Nav";
 import ProjectList from "./components/ProjectList";
 import Register from "./components/Register";
 import DocumentCreateForm from "./components/DocumentCreateForm";
+import ProjectCreateForm from "./components/ProjectCreateForm";
+import DocumentEditForm from "./components/DocumentEditForm";
+import ProjectEditForm from "./components/ProjectEditForm";
+import ActivityLog from "./components/ActivityLog";
+import ProjectDetails from "./components/ProjectDetails";
+import ProjectUploadList from "./components/ProjectUploadList";
 
 const App = () => {
   const handleToggle = () => {
@@ -71,10 +77,10 @@ const App = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="table.html">
-                <i className="fas fa-table"></i>
-                <span>Table</span>
-              </a>
+              <Link className="nav-link" href="table.html" to="/activitylog">
+                <i className="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
+                <span>Activity Log</span>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="login.html">
@@ -97,9 +103,15 @@ const App = () => {
           <div className="container-fluid">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/activitylog" element={<ActivityLog />} />
+              <Route path="/documentform/:id" element={<DocumentEditForm />} />
               <Route path="/documentform" element={<DocumentCreateForm />} />
               <Route path="/documents" element={<DocumentList />} />
+              <Route path="/projectform/:id" element={<ProjectEditForm />} />
+              <Route path="/projectform" element={<ProjectCreateForm />} />
+              <Route path="/projects/:id" element={<ProjectDetails />} />
               <Route path="/projects" element={<ProjectList />} />
+              <Route path="/uploadlist" element={<ProjectUploadList />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Routes>

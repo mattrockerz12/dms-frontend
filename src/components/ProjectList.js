@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadProjects } from "../redux/actions/projectActions";
+import { loadProjects, removeProject } from "../redux/actions/projectActions";
 import Pagination from "react-js-pagination";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const ProjectList = () => {
   const projects = useSelector((state) => state.dmsProj.projects);
@@ -24,17 +25,21 @@ const ProjectList = () => {
     });
   };
 
+  const handleDelete = (project) => {
+    dispatch(removeProject(project));
+  };
+
   return (
     <>
       <div className="d-sm-flex justify-content-between align-items-center mb-4">
         <h3 className="text-dark mb-0">Projects</h3>
-        <a
+        <Link
           className="btn btn-primary btn-sm d-none d-sm-inline-block"
           role="button"
-          href="#"
+          to="/projectform"
         >
           <i className="fa-solid fa-plus"></i>&nbsp;Add Project
-        </a>
+        </Link>
       </div>
       <div className="card shadow">
         <div className="card-header py-3">
@@ -94,7 +99,9 @@ const ProjectList = () => {
               <tbody>
                 {projects.map((project, index) => (
                   <tr key={index}>
-                    <td>{project.name}</td>
+                    <td>
+                      <a href={`/projects/${project.id}`}>{project.name}</a>
+                    </td>
                     <td>
                       {moment(project.created_at).format(
                         "MMMM Do YYYY, h:mm:ss a"
@@ -107,7 +114,18 @@ const ProjectList = () => {
                     </td>
                     <td>
                       <div className="btn-group">
-                        <button className="btn btn-danger">Delete</button>
+                        <Link
+                          className="btn btn-primary"
+                          to={`/projectform/${project.id}`}
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(project)}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </td>
                   </tr>

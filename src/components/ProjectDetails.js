@@ -1,40 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  loadDocuments,
-  removeDocument,
-} from "../redux/actions/documentActions";
-import Pagination from "react-js-pagination";
-import moment from "moment";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loadProjectDetail } from "../redux/actions/projectActions";
 
-const DocumentList = () => {
+const ProjectDetails = () => {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const documents = useSelector((state) => state.dms.documents);
-  const meta = useSelector((state) => state.dms.meta);
-  const [filters, setFilters] = useState({
-    page: 1,
-  });
+  const projects = useSelector((state) => state.dmsProj.projects);
 
   useEffect(() => {
-    dispatch(loadDocuments(filters));
-  }, [filters, filters.page, dispatch]);
-
-  const handlePageChange = (pageNumber) => {
-    setFilters({
-      ...filters,
-      page: pageNumber,
-    });
-  };
-
-  const handleDelete = (document) => {
-    dispatch(removeDocument(document));
-  };
+    dispatch(loadProjectDetail(id));
+  }, []);
 
   return (
     <>
       <div className="d-sm-flex justify-content-between align-items-center mb-4">
-        <h3 className="text-dark mb-0">Documents</h3>
+        <h3 className="text-dark mb-0">Project Details</h3>
         <Link
           className="btn btn-primary btn-sm d-none d-sm-inline-block"
           role="button"
@@ -92,51 +74,30 @@ const DocumentList = () => {
             <table className="table my-0" id="dataTable">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Date Added</th>
-                  <th>Document Count</th>
-                  <th>Actions</th>
+                  <th>Details</th>
+                  <th>Revision Count</th>
+                  <th>Latest Upload By</th>
+                  <th>Latest Date Uploaded</th>
                 </tr>
               </thead>
               <tbody>
-                {documents.map((document) => (
-                  <tr key={document.id}>
-                    <td>{document.name}</td>
+                {projects.map((project, index) => (
+                  <tr key={index}>
                     <td>
-                      {moment(document.created_at).format(
-                        "MMMM Do YYYY, h:mm:ss a"
-                      )}
+                      <Link to="/uploadlist">{project.document.name}</Link>
                     </td>
-                    <td>
-                      <span className="badge bg-success">
-                        {document.document_count}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="btn-group">
-                        <Link
-                          to={`/documentform/${document.id}`}
-                          className="btn btn-primary"
-                        >
-                          Edit
-                        </Link>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDelete(document)}
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </td>
+                    <td>{project.project_document_detail_count}</td>
+                    <td>{project.latest_upload_by_date}</td>
+                    <td></td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
                 <tr>
-                  <td>Name</td>
-                  <td>Date Added</td>
-                  <td>Document Count</td>
-                  <td>Actions</td>
+                  <td>Details</td>
+                  <td>Revision Count</td>
+                  <td>Latest Upload By</td>
+                  <td>Latest Date Uploaded</td>
                 </tr>
               </tfoot>
             </table>
@@ -153,16 +114,7 @@ const DocumentList = () => {
               </p>
             </div>
             <div className="col-md-6">
-              <nav className="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                <Pagination
-                  activePage={meta.current_page}
-                  totalItemsCount={parseInt(meta.total, 10)}
-                  itemsCountPerPage={meta.per_page}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                  onChange={(pageNumber) => handlePageChange(pageNumber)}
-                />
-              </nav>
+              <nav className="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers"></nav>
             </div>
           </div>
         </div>
@@ -171,4 +123,4 @@ const DocumentList = () => {
   );
 };
 
-export default DocumentList;
+export default ProjectDetails;

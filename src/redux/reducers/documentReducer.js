@@ -8,6 +8,11 @@ const initialState = {
 
 const documentReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.GET_DOCUMENTS_SUCCESS:
+      return {
+        ...state,
+        documents: action.payload,
+      };
     case types.LOAD_DOCUMENTS_SUCCESS:
       return {
         ...state,
@@ -18,6 +23,15 @@ const documentReducer = (state = initialState, action) => {
       return {
         ...state,
         documents: [...state.documents, { ...action.payload }],
+      };
+    case types.UPDATE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        documents: [
+          ...state.documents.map((document) =>
+            document.id === action.payload.id ? action.payload : document
+          ),
+        ],
       };
     case types.DELETE_DOCUMENT_SUCCESS:
       return {
