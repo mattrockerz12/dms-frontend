@@ -118,13 +118,13 @@ const ProjectList = () => {
                           className="btn btn-primary"
                           to={`/projectform/${project.id}`}
                         >
-                          Edit
+                          <i className="fa-solid fa-file-pen"></i>
                         </Link>
                         <button
                           className="btn btn-danger"
                           onClick={() => handleDelete(project)}
                         >
-                          Delete
+                          <i className="fa-solid fa-trash"></i>
                         </button>
                       </div>
                     </td>

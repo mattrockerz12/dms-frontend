@@ -118,13 +118,13 @@ const DocumentList = () => {
                           to={`/documentform/${document.id}`}
                           className="btn btn-primary"
                         >
-                          Edit
+                          <i className="fa-solid fa-file-pen"></i>
                         </Link>
                         <button
                           className="btn btn-danger"
                           onClick={() => handleDelete(document)}
                         >
-                          Delete
+                          <i className="fa-solid fa-trash"></i>
                         </button>
                       </div>
                     </td>
